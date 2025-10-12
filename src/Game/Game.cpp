@@ -3,33 +3,51 @@
 //
 
 #include "Game.h"
+#include "../Resources/ResourceManager.h"
 #include <iostream>
 #include <string>
 
 Game::Game():
-m_window(sf::VideoMode({800, 600}), "The RPG Game") {
+ m_sceneManager(m_UIManager)
+{
+
+    
+    // Tüm fontları başlangıçta yükle
+    auto& rm = ResourceManager::getInstance();
+    
+
+    if (!rm.loadFont("arial", "assets/fonts/arial.ttf")) {
+        std::cerr << "ERROR: Failed to load arial font" << std::endl;
+        throw std::runtime_error("Failed to load arial font");
+    }
+
+    
 
 }
 
 void Game::run() {
-    while (m_window.isOpen()) {
+
+
+    m_sceneManager.initialize();
+    while (m_UIManager.getWindow().isOpen()) {
         processEvents();
         update();
         render();
     }
+    
+    std::cout << "Game loop ended!" << std::endl;
 }
 
 void Game::processEvents() {
-    while (const std::optional event = m_window.pollEvent())
+    while (auto event = m_UIManager.getWindow().pollEvent())
     {
         if (event->is<sf::Event::Closed>())
         {
-            m_window.close();
+            std::cout << "Close event received!" << std::endl;
+            m_UIManager.getWindow().close();
         }
 
-        if (event->is<sf::Event::MouseButtonPressed>()) {
-            counter++;
-        }
+        m_UIManager.handleEvent(event);
     }
 }
 
@@ -38,29 +56,5 @@ void Game::update() {
 }
 
 void Game::render() {
-    m_window.clear(sf::Color::Black);
-
-    sf::Font font("assets/fonts/arial.ttf");
-
-    sf::Text text(font);
-    text.setString("Naber mudur ? " + std::to_string(counter));
-    text.setCharacterSize(40);
-    text.setFillColor(sf::Color::White);
-
-    m_window.draw(text);
-
-    sf::RectangleShape button(sf::Vector2f(200, 50));
-    button.setFillColor(sf::Color::Blue);
-    button.setPosition({300,400});
-
-    sf::Text buttonText(font, "Bu bir buton", 16);
-    buttonText.setFillColor(sf::Color::White);
-    buttonText.setPosition({button.getPosition().x + 50, button.getPosition().y + 10});
-
-    m_window.draw(button);
-    m_window.draw(buttonText);
-
-
-
-    m_window.display();
+    m_UIManager.render();
 }

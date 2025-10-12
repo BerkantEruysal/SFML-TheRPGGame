@@ -7,6 +7,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../Scenes/SceneManager.h"
+#include "../UI/UIManager/UIManager.h"
+
 
 class Game {
 
@@ -15,8 +18,8 @@ public:
     void run();
 
 private:
-    sf::RenderWindow m_window;
-    int counter {0};
+    UIManager m_UIManager {};
+    SceneManager m_sceneManager;
 
     void processEvents();
     void update();
