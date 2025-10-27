@@ -11,21 +11,25 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 
+class SceneBackground;
+
 class UIManager {
 
 public:
     UIManager();
-    void setUIElements(std::vector<std::unique_ptr<IUIElement>>* uiElements);
-    std::vector<std::unique_ptr<IUIElement>>* getUIElements();
+
+    std::vector<std::unique_ptr<IUIElement>>& getUIElements();
     sf::RenderWindow& getWindow();
     void render();
     void handleEvent(const std::optional<sf::Event>& event);
+    IUIElement* addUIElementToVector(std::unique_ptr<IUIElement> element);
+
 
 
 
 private:
     sf::RenderWindow m_window;
-    std::vector<std::unique_ptr<IUIElement>>* m_UIElements; // Pointer to scene's vector
+    std::vector<std::unique_ptr<IUIElement>> m_UIElements;
 
 
 };

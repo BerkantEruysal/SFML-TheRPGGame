@@ -25,12 +25,22 @@ add_executable(main src/main.cpp
         src/Scenes/SceneType.h
         src/Scenes/MenuScene/MenuScene.cpp
         src/Scenes/MenuScene/MenuScene.h
-        src/UI/ChoiceGrid/ChoiceGrid.cpp
-        src/UI/ChoiceGrid/ChoiceGrid.h
         src/UI/MenuButton/MenuButton.cpp
         src/UI/MenuButton/MenuButton.h
         src/Resources/ResourceManager.cpp
         src/Resources/ResourceManager.h
+        src/UI/UIUtils/UIUtils.cpp
+        src/UI/UIUtils/UIUtils.h
+        src/UI/SceneBackgorund/SceneBackground.cpp
+        src/UI/SceneBackgorund/SceneBackground.h
+        src/Scenes/TypeAScene/TypeAScene.cpp
+        src/Scenes/TypeAScene/TypeAScene.h
+        src/UI/Image/Image.cpp
+        src/UI/Image/Image.h
+        src/UI/TextElements/ScrollableTextContainer.cpp
+        src/UI/TextElements/ScrollableTextContainer.h
+        src/UI/TextElements/TextBox.cpp
+        src/UI/TextElements/TextBox.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)

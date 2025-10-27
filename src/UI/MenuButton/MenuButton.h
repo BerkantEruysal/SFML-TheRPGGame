@@ -16,11 +16,12 @@ public:
     void setColor(const sf::Color &color) override;
     void handleEvent(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;
+    void setPosition(const sf::Vector2f position) override;
+    sf::FloatRect getGLobalBounds() override;
 private:
     std::string m_text;
     sf::Text m_textObject;
     sf::RectangleShape m_shape;
-
 };
 
 

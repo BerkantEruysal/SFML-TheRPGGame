@@ -7,6 +7,7 @@
 
 enum class SceneType {
     Menu,
+    TypeAScene,
 };
 
 #endif //CMAKESFMLPROJECT_SCENETYPE_H

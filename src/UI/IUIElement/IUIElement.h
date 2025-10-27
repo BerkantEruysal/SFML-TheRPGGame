@@ -8,9 +8,16 @@
 
 class IUIElement {
 public:
+    explicit IUIElement(sf::Vector2f position) : m_position(position) {}
     virtual ~IUIElement() = default;
     virtual void draw(sf::RenderWindow& window) = 0;
-    virtual void handleEvent(const sf::Event& event) {};
+    virtual void handleEvent(const sf::Event& event) {}
+    virtual void setPosition (const sf::Vector2f position) = 0;
+    virtual sf::FloatRect getGLobalBounds() = 0;
+    virtual void cleanup() {}
+
+private:
+    sf::Vector2f m_position;
 };
 
 

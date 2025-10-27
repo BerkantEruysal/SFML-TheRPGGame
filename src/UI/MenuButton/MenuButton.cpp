@@ -10,7 +10,7 @@
 
 #include "../../Resources/ResourceManager.h"  // Path'i projen yapısına göre ayarla
 
-MenuButton::MenuButton(std::string text, sf::Vector2f position) :
+MenuButton::MenuButton(std::string text, sf::Vector2f position = sf::Vector2f(0, 0) ) :
     IButton(position),
     m_text{std::move(text)},
     m_textObject{ResourceManager::getInstance().getFont("arial"), m_text},  // ✅
@@ -20,18 +20,17 @@ MenuButton::MenuButton(std::string text, sf::Vector2f position) :
     m_textObject.setCharacterSize(24);
     m_textObject.setFillColor(sf::Color::White);
 
-    // Shape'i ayarla
-    m_shape.setPosition(position);
+    // Shape'in origin'ini merkeze ayarla
+    m_shape.setOrigin(sf::Vector2f(m_shape.getSize().x / 2.0f, m_shape.getSize().y / 2.0f));
     m_shape.setFillColor(sf::Color(50, 50, 50));
-
 
     // Text'i butonun ortasına hizala
     sf::FloatRect textBounds = m_textObject.getLocalBounds();
     m_textObject.setOrigin(textBounds.getCenter());
-    m_textObject.setPosition(
-        sf::Vector2f(\
-            position.x + m_shape.getSize().x / 2.0f,
-            position.y + m_shape.getSize().y / 2.0f));
+    
+    // Her ikisini de aynı pozisyona yerleştir (merkez olarak)
+    m_shape.setPosition(position);
+    m_textObject.setPosition(position);
 }
 
 void MenuButton::setText(const std::string &text) {
@@ -64,4 +63,19 @@ void MenuButton::handleEvent(const sf::Event &event) {
 void MenuButton::draw(sf::RenderWindow &window) {
     window.draw(m_shape);
     window.draw(m_textObject);
+}
+
+void MenuButton::setPosition(const sf::Vector2f position) {
+    // Shape'in origin'ini merkeze ayarla
+    m_shape.setOrigin(sf::Vector2f(m_shape.getSize().x / 2.0f, m_shape.getSize().y / 2.0f));
+    
+    // Artık position direkt merkez noktayı referans alır
+    m_shape.setPosition(position);
+    m_textObject.setPosition(position);
+
+
+}
+
+sf::FloatRect MenuButton::getGLobalBounds() {
+    return m_shape.getGlobalBounds();
 }

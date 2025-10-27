@@ -18,8 +18,12 @@ public:
     virtual ~IScene() = default;
     virtual void onEnter() = 0;
     virtual void onExit() = 0;
-    virtual std::vector<std::unique_ptr<IUIElement>>* getUIElements() {
-        return &m_UIElements;
+    virtual std::vector<IUIElement*>* getUIElementPointers() {
+        return &m_UIElementPointers;
+    }
+    virtual IUIElement* addUIElement(std::unique_ptr<IUIElement> element) {
+        m_UIElementPointers.push_back(element.get());
+        return ui_manager.addUIElementToVector(std::move(element));
     }
 
 
@@ -30,7 +34,7 @@ public:
 
 protected:
     UIManager& ui_manager;
-    std::vector<std::unique_ptr<IUIElement>> m_UIElements; // Her scene'in kendi vector'ü
+    std::vector<IUIElement*> m_UIElementPointers;
 
 private:
 

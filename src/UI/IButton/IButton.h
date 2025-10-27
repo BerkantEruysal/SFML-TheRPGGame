@@ -16,7 +16,7 @@
 class IButton : public IUIElement{
 public:
 
-    explicit IButton(const sf::Vector2f& position) : m_position(position) {}
+    explicit IButton(const sf::Vector2f& position) : IUIElement(position) {}
     virtual ~IButton() = default;
 
 
@@ -29,7 +29,7 @@ public:
     std::function<void()> onHover;
 
 private:
-    sf::Vector2f m_position;
+
 
 
 };

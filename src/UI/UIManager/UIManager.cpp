@@ -7,27 +7,22 @@
 #include <iostream>
 #include <vector>
 
-UIManager::UIManager() : m_UIElements(nullptr), m_window(sf::VideoMode({800, 600}), "The RPG Game") {
+#include "../SceneBackgorund/SceneBackground.h"
+
+UIManager::UIManager() : m_window(sf::VideoMode({1536, 1023}), "The RPG Game", sf::Style::Close) {
 
 }
 
-void UIManager::setUIElements(std::vector<std::unique_ptr<IUIElement>>* uiElements) {
-    m_UIElements = uiElements;
-}
-
-std::vector<std::unique_ptr<IUIElement>>* UIManager::getUIElements() {
+std::vector<std::unique_ptr<IUIElement>>& UIManager::getUIElements() {
     return m_UIElements;
 }
 
 void UIManager::render() {
     getWindow().clear(sf::Color::Black);
 
-    if (m_UIElements != nullptr) {
-        for (auto& element : *m_UIElements) {
-            element->draw(getWindow());
-        }
+    for (auto& element : m_UIElements) {
+        element->draw(getWindow());
     }
-
     getWindow().display();
 }
 
@@ -39,13 +34,16 @@ sf::RenderWindow& UIManager::getWindow() {
 void UIManager::handleEvent(const std::optional<sf::Event>& event){
     //check if the event is valid or not
     if (event.has_value()) {
-
-        if (m_UIElements != nullptr) {
-            for (auto& element : *m_UIElements) {
-                element->handleEvent(event.value());
-            }
+        for (auto& element : m_UIElements) {
+            element->handleEvent(event.value());
         }
     }
+}
+
+IUIElement* UIManager::addUIElementToVector(std::unique_ptr<IUIElement> element) {
+    IUIElement* ptr = element.get();
+    m_UIElements.push_back(std::move(element));
+    return ptr;
 }
 
 
