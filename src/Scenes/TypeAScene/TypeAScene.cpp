@@ -8,7 +8,7 @@
 #include "../../UI/UIUtils/UIUtils.h"
 #include "SFML/Graphics/Font.hpp"
 #include "../../UI/Image/Image.h"
-
+#include "../../UI/TextElements/ScrollableTextContainer.h"
 
 
 void TypeAScene::onEnter() {
@@ -33,12 +33,22 @@ void TypeAScene::onEnter() {
     sf::Vector2f paperPosition {static_cast<float>(ui_manager.getWindow().getSize().x), 0};
     paper->m_backgroundSprite.setPosition(paperPosition);
 
+    auto contA = std::make_unique<ScrollableTextContainer>(ui_manager, sf::Vector2f(930,100), 500, 810);
+
+
+    contA->createTextBox( "Naber mudur ?" , TextBoxType::User, 1);
+    contA->createTextBox( "Deneme yazisi 1" , TextBoxType::User, 1);
+    contA->createTextBox( "Hebele hubele asdfkj jfdklas asldkfj" , TextBoxType::User, 1);
+    contA->createTextBox( "Hayda rinnnaaa rinnna rinanay" , TextBoxType::User, 1);
+    contA->createTextBox( "Naber mudur ?" , TextBoxType::User, 1);
+
+
 
     addUIElement(std::move(background));
     addUIElement(std::move(frameImage));
     addUIElement(std::move(frame));
     addUIElement(std::move(paper));
-
+    addUIElement(std::move(contA));
 
 
 

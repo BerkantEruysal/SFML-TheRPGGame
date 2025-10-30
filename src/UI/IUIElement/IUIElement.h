@@ -12,12 +12,13 @@ public:
     virtual ~IUIElement() = default;
     virtual void draw(sf::RenderWindow& window) = 0;
     virtual void handleEvent(const sf::Event& event) {}
-    virtual void setPosition (const sf::Vector2f position) = 0;
+    virtual void setPosition (sf::Vector2f position) = 0;
     virtual sf::FloatRect getGLobalBounds() = 0;
     virtual void cleanup() {}
-
-private:
+protected:
     sf::Vector2f m_position;
+private:
+
 };
 
 

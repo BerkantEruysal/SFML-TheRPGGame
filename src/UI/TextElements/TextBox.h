@@ -16,16 +16,25 @@ enum class TextBoxType {
 
 class TextBox : public IUIElement {
 public:
-    TextBox(sf::Vector2f position, float width, TextBoxType type, int groupID = -1);
-    std::string& getText();
     void setText(std::string_view text);
     std::function<void()> onClick;
+    TextBox(std::string_view text, sf::Vector2f position, float width, TextBoxType type, int groupID = -1);
+    void draw(sf::RenderWindow &window) override;
+    void handleEvent(const sf::Event &event) override;
+    void setPosition(sf::Vector2f position) override;
+    std::string& getText();
+    sf::FloatRect getGLobalBounds() override;
 
     int m_groupID;
 private:
+    float m_width;
+    unsigned int m_characterSize {20};
     TextBoxType m_type;
     std::string m_text;
-    float m_width;
+
+    sf::Text m_textObject;
+
+
 };
 
 
