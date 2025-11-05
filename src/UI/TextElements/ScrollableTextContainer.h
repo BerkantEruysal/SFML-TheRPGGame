@@ -17,7 +17,7 @@ public:
     ScrollableTextContainer(UIManager& ui_manager, sf::Vector2f position, float width, float height);
 
     //IUIElement* addTextBox(std::unique_ptr<TextBox> element);
-    IUIElement* createTextBox(std::string_view text, TextBoxType type, int groupID = -1);
+    IUIElement* createTextBox(std::string_view speaker, std::string_view text,  Model::TextBoxType type, std::function<void(Model::UserOption)> onClick,  int ID,  int groupID = -1);
 
     bool removeElementFromVector(TextBox*);
     bool removeElementFromVector(size_t index);
@@ -25,15 +25,21 @@ public:
     void draw(sf::RenderWindow &window) override;
     void setPosition(sf::Vector2f position) override;
     sf::FloatRect getGLobalBounds() override;
+    void handleEvent(const sf::Event &event) override;
+    void removeOptionGroup(int groupID);
 
 private:
+    static constexpr float BOX_SPACING {10.0f};
     float m_width;
     float m_height;
     float m_scrollValue {0};
+    float m_firstElementAnchor;
     sf::RectangleShape m_background;
+    sf::View m_scrollView;
     UIManager& ui_manager;
-    std::vector<std::unique_ptr<IUIElement>> m_TextElems;
+    std::vector<std::unique_ptr<TextBox>> m_TextElems;
     sf::FloatRect m_globalBounds;
+
 
 };
 

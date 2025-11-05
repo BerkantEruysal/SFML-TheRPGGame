@@ -4,6 +4,8 @@
 
 #include "TypeAScene.h"
 #include <iostream>
+
+#include "../../Models/UserOption.h"
 #include "../../UI/MenuButton/MenuButton.h"
 #include "../../UI/UIUtils/UIUtils.h"
 #include "SFML/Graphics/Font.hpp"
@@ -36,11 +38,13 @@ void TypeAScene::onEnter() {
     auto contA = std::make_unique<ScrollableTextContainer>(ui_manager, sf::Vector2f(930,100), 500, 810);
 
 
-    contA->createTextBox( "Naber mudur ?" , TextBoxType::User, 1);
-    contA->createTextBox( "Deneme yazisi 1" , TextBoxType::User, 1);
-    contA->createTextBox( "Hebele hubele asdfkj jfdklas asldkfj" , TextBoxType::User, 1);
-    contA->createTextBox( "Hayda rinnnaaa rinnna rinanay" , TextBoxType::User, 1);
-    contA->createTextBox( "Naber mudur ?" , TextBoxType::User, 1);
+    contA->createTextBox( "Kedi" ,
+        "Bunlar" ,
+        Model::TextBoxType::UserChoice,
+        [](Model::UserOption data) {std::cout << data.id << std::flush ; },
+        1  ,
+        1);
+
 
 
 
