@@ -1,0 +1,10 @@
+//
+// Created by arwen on 5.11.2025.
+//
+
+#ifndef CMAKESFMLPROJECT_DIALOG_H
+#define CMAKESFMLPROJECT_DIALOG_H
+
+
+
+#endif //CMAKESFMLPROJECT_DIALOG_H

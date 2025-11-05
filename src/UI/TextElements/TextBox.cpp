@@ -3,9 +3,8 @@
 //
 
 #include "TextBox.h"
-
 #include <iostream>
-
+#include <sstream>
 #include "../../Resources/ResourceManager.h"
 
 
@@ -18,6 +17,7 @@ const sf::Color TextBox::BG_COLOR =  sf::Color(0, 0, 0, 50);
 const float TextBox::BOX_SPACING = 10.0f;
 int TextBox::NEXT_ID = 0;
 int TextBox::NEXT_GROUP_ID = 0;
+
 
 TextBox::TextBox(UIManager& ui_manager, sf::View& scrollView ,std::string_view speaker, std::string_view text,  sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID):
 m_text(text),

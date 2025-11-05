@@ -69,4 +69,8 @@ TypeAScene::TypeAScene(UIManager &uimanager) : IScene(uimanager) {
 
 }
 
+void TypeAScene::handleUserOptionClicked(Model::UserOption) {
+
+}
+
 

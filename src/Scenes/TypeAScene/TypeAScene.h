@@ -6,6 +6,7 @@
 #define CMAKESFMLPROJECT_TYPEASCENE_H
 
 #include "../IScene.h"
+#include "../../Models/UserOption.h"
 #include "../../UI/SceneBackgorund/SceneBackground.h"
 #include "../../UI/IUIElement/IUIElement.h"
 
@@ -14,7 +15,7 @@ public:
     void onEnter() override;
     void onExit() override;
 
-
+    void handleUserOptionClicked(Model::UserOption);
 
     TypeAScene(UIManager& uimanager);
 
