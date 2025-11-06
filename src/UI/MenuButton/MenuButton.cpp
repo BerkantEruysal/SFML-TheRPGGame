@@ -13,7 +13,7 @@
 MenuButton::MenuButton(std::string text, sf::Vector2f position = sf::Vector2f(0, 0) ) :
     IButton(position),
     m_text{std::move(text)},
-    m_textObject{ResourceManager::getInstance().getFont("arial"), m_text},  // ✅
+    m_textObject{ResourceManager::getInstance().getFont("arial"), sf::String::fromUtf8(m_text.begin(), m_text.end())},  // ✅
     m_shape{sf::Vector2f(200, 50)}
 {
     // Text objesini ayarla
@@ -35,7 +35,7 @@ MenuButton::MenuButton(std::string text, sf::Vector2f position = sf::Vector2f(0,
 
 void MenuButton::setText(const std::string &text) {
     m_text = text;
-    m_textObject.setString(text);
+    m_textObject.setString(sf::String::fromUtf8(m_text.begin(), m_text.end()));
 }
 
 void MenuButton::setFont(const sf::Font &font) {

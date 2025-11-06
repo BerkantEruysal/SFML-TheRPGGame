@@ -75,7 +75,7 @@ sf::FloatRect ScrollableTextContainer::getGLobalBounds() {
 }
 
 void ScrollableTextContainer::setPosition(const sf::Vector2f position) {
-    // Empty becouse we won't need it for now.
+    // Empty because we won't need it for now.
 }
 
 IUIElement *ScrollableTextContainer::createTextBox(std::string_view speaker, std::string_view text , Model::TextBoxType type , std::function<void(Model::Dialog)> onClick, int ID,  int groupID) {

@@ -29,12 +29,12 @@ m_groupID(groupID),
 m_ID(ID),
 ui_manager(ui_manager),
 m_scrollView(scrollView),
-m_speakerObject(ResourceManager::getInstance().getFont("arial"), m_speaker, TextBox::SPEAKER_CHARACTER_SIZE)
+m_speakerObject(ResourceManager::getInstance().getFont("arial"), sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()), TextBox::SPEAKER_CHARACTER_SIZE)
 
 {
      m_speakerObject.setCharacterSize(TextBox::SPEAKER_CHARACTER_SIZE);
      m_speakerObject.setFillColor(TextBox::SPEAKER_COLOR);
-     m_speakerObject.setString(m_speaker);
+     m_speakerObject.setString(sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()));
 
      wrapText(std::string{speaker}, std::string{text} , m_width - BOX_SPACING * 2);
 
@@ -113,7 +113,7 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
 
     // Speaker'ı ayarla (sadece ilk satır için)
 
-    m_speakerObject.setString(speaker.empty() ? "" : speaker + " ");
+    m_speakerObject.setString(speaker.empty() ? sf::String() : sf::String::fromUtf8(speaker.begin(), speaker.end()) + sf::String(" "));
 
     const float speakerWidth = speaker.empty() ? 0.0f : m_speakerObject.getLocalBounds().size.x;
 
@@ -137,7 +137,7 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
 
     for (size_t i = 0; i < words.size(); ++i) {
         std::string testLine = currentLine.empty() ? words[i] : currentLine + " " + words[i];
-        tempText.setString(testLine);
+        tempText.setString(sf::String::fromUtf8(testLine.begin(), testLine.end()));
         float testWidth = tempText.getLocalBounds().size.x;
 
         // İlk satırda speaker genişliğini de hesaba kat
@@ -152,7 +152,7 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
             if (!currentLine.empty()) {
                 sf::Text lineText {font};
                 lineText.setCharacterSize(TextBox::CHARACTER_SIZE);
-                lineText.setString(currentLine);
+                lineText.setString(sf::String::fromUtf8(currentLine.begin(), currentLine.end()));
                 lineText.setFillColor(TextBox::TEXT_COLOR);
                 m_textLines.push_back(lineText);
 
@@ -161,7 +161,7 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
 
             // Yeni satıra geç
             currentLine = words[i];
-            tempText.setString(words[i]);
+            tempText.setString(sf::String::fromUtf8(words[i].begin(), words[i].end()));
             currentWidth = tempText.getLocalBounds().size.x;
 
             // Eğer tek kelime bile sığmıyorsa (çok uzun kelime durumu)
@@ -169,7 +169,7 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
                 // Kelimeyi olduğu gibi ekle, taşmasına izin ver
                 sf::Text lineText {font};
                 lineText.setCharacterSize(TextBox::CHARACTER_SIZE);
-                lineText.setString(currentLine);
+                lineText.setString(sf::String::fromUtf8(currentLine.begin(), currentLine.end()));
                 lineText.setFillColor(TextBox::TEXT_COLOR);
                 m_textLines.push_back(lineText);
                 currentLine = "";
@@ -182,14 +182,11 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
     if (!currentLine.empty()) {
         sf::Text lineText {font};
         lineText.setCharacterSize(TextBox::CHARACTER_SIZE);
-        lineText.setString(currentLine);
+        lineText.setString(sf::String::fromUtf8(currentLine.begin(), currentLine.end()));
         lineText.setFillColor(TextBox::TEXT_COLOR);
         m_textLines.push_back(lineText);
     }
 
-    for (const auto& line : m_textLines) {
-        std::cout << static_cast<std::string>(line.getString()) << std::endl;
-    }
 }
 
 void TextBox::calculateElementPositions() {
