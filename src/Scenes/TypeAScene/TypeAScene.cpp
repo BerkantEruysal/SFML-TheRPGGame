@@ -5,7 +5,6 @@
 #include "TypeAScene.h"
 #include <iostream>
 
-#include "../../Models/UserOption.h"
 #include "../../UI/MenuButton/MenuButton.h"
 #include "../../UI/UIUtils/UIUtils.h"
 #include "SFML/Graphics/Font.hpp"
@@ -36,14 +35,9 @@ void TypeAScene::onEnter() {
     paper->m_backgroundSprite.setPosition(paperPosition);
 
     auto contA = std::make_unique<ScrollableTextContainer>(ui_manager, sf::Vector2f(930,100), 500, 810);
+    scrollableTextContainerRef = contA.get();
 
-
-    contA->createTextBox( "Kedi" ,
-        "Bunlar" ,
-        Model::TextBoxType::UserChoice,
-        [](Model::UserOption data) {std::cout << data.id << std::flush ; },
-        1  ,
-        1);
+    nextGroup(1);
 
 
 
@@ -64,13 +58,34 @@ void TypeAScene::onExit() {
 
 }
 
-TypeAScene::TypeAScene(UIManager &uimanager) : IScene(uimanager) {
+TypeAScene::TypeAScene(UIManager &uimanager, std::vector<Model::DialogGroup> dialogGroups) :
+IScene(uimanager),
+m_dialogGroups(std::move(dialogGroups))
+{
 
 
 }
 
-void TypeAScene::handleUserOptionClicked(Model::UserOption) {
+void TypeAScene::nextGroup(int id) {
+    int index = 0;
+    while (index < m_dialogGroups.size() && m_dialogGroups[index].id != id){
+        index++;
+    }
+    if (index < m_dialogGroups.size()) {
+        for (auto& dialog : m_dialogGroups[index].dialogs) {
+         scrollableTextContainerRef->createTextBox(
+            dialog.speaker,
+            dialog.text,
+            dialog.type,
+            [this](const Model::Dialog& option) {handleOptionSelection(option);},
+            dialog.id,
+            m_dialogGroups[index].id
+         );
+        }
 
+    }
 }
 
+void TypeAScene::handleOptionSelection(Model::Dialog option) {
 
+}

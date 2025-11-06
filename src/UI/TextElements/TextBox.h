@@ -5,11 +5,10 @@
 #ifndef CMAKESFMLPROJECT_TEXTBOX_H
 #define CMAKESFMLPROJECT_TEXTBOX_H
 #include <functional>
-#include "../../Models/UserOption.h"
 #include "../IUIElement/IUIElement.h"
 #include "../UIManager/UIManager.h"
-
-
+#include "../../Models/Dialog.h"
+#include "../../Models/TextBoxType.h"
 
 
 
@@ -26,7 +25,7 @@ public:
     float getHeight() const;
     std::string& getText();
     sf::FloatRect getGLobalBounds() override;
-    std::function<void(Model::UserOption)> onClick;
+    std::function<void(Model::Dialog)> onClick;
 
     int m_groupID;
     int m_ID;

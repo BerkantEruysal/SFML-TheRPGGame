@@ -78,7 +78,7 @@ void ScrollableTextContainer::setPosition(const sf::Vector2f position) {
     // Empty becouse we won't need it for now.
 }
 
-IUIElement *ScrollableTextContainer::createTextBox(std::string_view speaker, std::string_view text , Model::TextBoxType type , std::function<void(Model::UserOption)> onClick, int ID,  int groupID) {
+IUIElement *ScrollableTextContainer::createTextBox(std::string_view speaker, std::string_view text , Model::TextBoxType type , std::function<void(Model::Dialog)> onClick, int ID,  int groupID) {
     //float bottomPoint {m_position.y + m_height};
     float totalSize{0};
     for (auto& element : m_TextElems) {

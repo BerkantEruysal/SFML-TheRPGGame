@@ -92,10 +92,10 @@ void TextBox::handleEvent(const sf::Event &event) {
 
                     onClick({
                     m_text,
-                        m_type,
                     m_speaker,
                         m_ID,
                         m_groupID,
+                        m_type,
                     });
                 }
             }

@@ -34,7 +34,7 @@ std::unique_ptr<IScene> SceneManager::createScene(SceneType sceneType) {
         case SceneType::Menu:
             return std::make_unique<MenuScene>(m_uimanager);
         case SceneType::TypeAScene:
-            return std::make_unique<TypeAScene>(m_uimanager);
+            return std::make_unique<TypeAScene>(m_uimanager, exampleDialogGroup);
         default:
             throw std::runtime_error("Unknown scene type");
     }

@@ -41,7 +41,6 @@ add_executable(main src/main.cpp
         src/UI/TextElements/ScrollableTextContainer.h
         src/UI/TextElements/TextBox.cpp
         src/UI/TextElements/TextBox.h
-        src/Models/UserOption.h
         src/Models/TextBoxType.h
         src/Models/Dialog.h
 )

@@ -6,22 +6,24 @@
 #define CMAKESFMLPROJECT_TYPEASCENE_H
 
 #include "../IScene.h"
-#include "../../Models/UserOption.h"
+#include "../../Models/Dialog.h"
 #include "../../UI/SceneBackgorund/SceneBackground.h"
 #include "../../UI/IUIElement/IUIElement.h"
+#include "../../UI/TextElements/ScrollableTextContainer.h"
 
 class TypeAScene : public IScene {
 public:
     void onEnter() override;
     void onExit() override;
+    TypeAScene(UIManager& uimanager, std::vector<Model::DialogGroup> dialogGroups);
 
-    void handleUserOptionClicked(Model::UserOption);
-
-    TypeAScene(UIManager& uimanager);
+    void nextGroup(int id);
+    void handleOptionSelection(Model::Dialog option);
 
 private:
-
-
+    int m_currentGroupID = 0;
+    std::vector<Model::DialogGroup> m_dialogGroups;
+    ScrollableTextContainer* scrollableTextContainerRef;
 };
 
 
