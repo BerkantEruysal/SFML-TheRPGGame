@@ -26,9 +26,12 @@ public:
         return ui_manager.addUIElementToVector(std::move(element));
     }
 
+    virtual void handleEvent(const sf::Event &event){}
 
     IScene(UIManager& uimanager) : ui_manager(uimanager) {
     }
+
+
 
 
 

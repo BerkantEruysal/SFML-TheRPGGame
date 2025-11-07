@@ -48,6 +48,7 @@ void Game::processEvents() {
         }
 
         m_UIManager.handleEvent(event);
+        m_sceneManager.handleEvent(event);
     }
 }
 

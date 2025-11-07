@@ -17,7 +17,7 @@ public:
 
     void setText(std::string_view text);
 
-    TextBox(UIManager &ui_manager, sf::View& scrollView ,  std::string_view speaker,std::string_view text, sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID = -1);
+    TextBox(UIManager &ui_manager, sf::View& scrollView ,  std::string_view speaker,std::string_view text, sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID, int nextID);
     void draw(sf::RenderWindow &window) override;
     void handleEvent(const sf::Event &event) override;
     void setPosition(sf::Vector2f position) override;
@@ -29,6 +29,7 @@ public:
 
     int m_groupID;
     int m_ID;
+    int m_nextID;
 
     static int NEXT_ID;
     static int NEXT_GROUP_ID;

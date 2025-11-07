@@ -56,7 +56,7 @@ inline std::vector<Model::DialogGroup> exampleDialogGroup {
             // Grup 4 - Tekli diyalog (Narator)
             {
                 {
-                    {"Laboratuvara koşarak girersin. Etrafta duman var.", "Narrator", 6, 7, Model::TextBoxType::Narator}
+                    {"Laboratuvara koşarak girersin. Etrafta duman var.", "Narrator", 6, 1, Model::TextBoxType::Narator}
                 },
                 4
             },

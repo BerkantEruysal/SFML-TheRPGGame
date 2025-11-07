@@ -59,8 +59,6 @@ bool ScrollableTextContainer::removeElementFromVector(size_t index) {
     return false;
 }
 
-
-
 void ScrollableTextContainer::draw(sf::RenderWindow &window) {
     window.draw(m_background);
     window.setView(m_scrollView);
@@ -78,15 +76,20 @@ void ScrollableTextContainer::setPosition(const sf::Vector2f position) {
     // Empty because we won't need it for now.
 }
 
-IUIElement *ScrollableTextContainer::createTextBox(std::string_view speaker, std::string_view text , Model::TextBoxType type , std::function<void(Model::Dialog)> onClick, int ID,  int groupID) {
+IUIElement *ScrollableTextContainer::createTextBox(std::string_view speaker, std::string_view text , Model::TextBoxType type , std::function<void(Model::Dialog)> onClick, int ID,  int groupID, int nextID) {
     //float bottomPoint {m_position.y + m_height};
     float totalSize{0};
     for (auto& element : m_TextElems) {
         totalSize += element->getHeight() + BOX_SPACING ;
     }
     sf::Vector2f calculatedPosition { 0, totalSize};
-    m_TextElems.push_back(std::make_unique<TextBox>(ui_manager, m_scrollView ,speaker , text,  calculatedPosition, m_width, type, groupID));
+    m_TextElems.push_back(std::make_unique<TextBox>(ui_manager, m_scrollView ,speaker , text,  calculatedPosition, m_width, type, ID , groupID, nextID));
     m_TextElems.back()->onClick = std::move(onClick);
+
+    if (totalSize > m_height) {
+        adjustScrollToBottom();
+    }
+
     return m_TextElems.back().get();
 }
 
@@ -136,4 +139,7 @@ void ScrollableTextContainer::removeOptionGroup(int groupID) {
     );
 }
 
-
+void ScrollableTextContainer::adjustScrollToBottom () {
+    //Scroll all the way to the bottom
+    m_scrollView.move(sf::Vector2f(0, m_height));
+}

@@ -18,7 +18,7 @@ public:
     ScrollableTextContainer(UIManager& ui_manager, sf::Vector2f position, float width, float height);
 
     //IUIElement* addTextBox(std::unique_ptr<TextBox> element);
-    IUIElement* createTextBox(std::string_view speaker, std::string_view text,  Model::TextBoxType type, std::function<void(Model::Dialog)> onClick,  int ID,  int groupID = -1);
+    IUIElement* createTextBox(std::string_view speaker, std::string_view text,  Model::TextBoxType type, std::function<void(Model::Dialog)> onClick,  int ID,  int groupID, int nextID);
 
     bool removeElementFromVector(TextBox*);
     bool removeElementFromVector(size_t index);
@@ -40,6 +40,7 @@ private:
     UIManager& ui_manager;
     std::vector<std::unique_ptr<TextBox>> m_TextElems;
     sf::FloatRect m_globalBounds;
+    void adjustScrollToBottom();
 
 
 };

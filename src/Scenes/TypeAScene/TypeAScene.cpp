@@ -66,26 +66,51 @@ m_dialogGroups(std::move(dialogGroups))
 
 }
 
+void TypeAScene::handleEvent(const sf::Event &event) {
+    // if spacebar pressed, call nextGroup
+    if (auto* keyPressed = event.getIf<sf::Event::KeyPressed>()) {
+        if (keyPressed->code == sf::Keyboard::Key::Space) {
+            int index = 0;
+            while (index < m_dialogGroups.size() && m_dialogGroups[index].id != m_currentGroupID){
+                index++;
+            }
+            if (index < m_dialogGroups.size()) {
+                if (m_dialogGroups[index].dialogs[0].type == Model::TextBoxType::UserChoice) {
+                    return;
+                }
+                nextGroup(m_dialogGroups[index].dialogs[0].nextID);
+            }
+        }
+    }
+}
+
 void TypeAScene::nextGroup(int id) {
+
     int index = 0;
     while (index < m_dialogGroups.size() && m_dialogGroups[index].id != id){
         index++;
     }
+
     if (index < m_dialogGroups.size()) {
+        m_currentGroupID = id;
         for (auto& dialog : m_dialogGroups[index].dialogs) {
          scrollableTextContainerRef->createTextBox(
             dialog.speaker,
             dialog.text,
             dialog.type,
-            [this](const Model::Dialog& option) {handleOptionSelection(option);},
+            [this](const Model::Dialog& option) {handleOptionSelection(option, m_currentGroupID);},
             dialog.id,
-            m_dialogGroups[index].id
+            m_dialogGroups[index].id,
+        dialog.nextID
          );
         }
 
     }
+
 }
 
-void TypeAScene::handleOptionSelection(Model::Dialog option) {
+void TypeAScene::handleOptionSelection(Model::Dialog option, int groupID) {
 
+    nextGroup(option.nextID);
+    scrollableTextContainerRef->removeOptionGroup(groupID);
 }

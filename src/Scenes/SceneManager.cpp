@@ -43,3 +43,10 @@ std::unique_ptr<IScene> SceneManager::createScene(SceneType sceneType) {
 void SceneManager::initialize() {
     setActiveScene(SceneType::TypeAScene);
 }
+
+void SceneManager::handleEvent(const std::optional<sf::Event>& event) {
+    if (event.has_value()) {
+        m_activeScene->handleEvent(event.value());
+    }
+
+}

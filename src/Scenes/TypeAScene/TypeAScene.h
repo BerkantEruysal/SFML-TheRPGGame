@@ -18,8 +18,8 @@ public:
     TypeAScene(UIManager& uimanager, std::vector<Model::DialogGroup> dialogGroups);
 
     void nextGroup(int id);
-    void handleOptionSelection(Model::Dialog option);
-
+    void handleOptionSelection(Model::Dialog option, int groupID);
+    void handleEvent(const sf::Event &event) override;
 private:
     int m_currentGroupID = 0;
     std::vector<Model::DialogGroup> m_dialogGroups;

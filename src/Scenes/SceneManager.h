@@ -17,6 +17,7 @@ public:
     void setActiveScene(SceneType sceneType);
     SceneManager(UIManager& uimanager);
     void initialize();
+    void handleEvent(const std::optional<sf::Event>& event);
 
 private:
     std::unique_ptr<IScene> m_activeScene;

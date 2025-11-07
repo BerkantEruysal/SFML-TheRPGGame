@@ -19,13 +19,14 @@ int TextBox::NEXT_ID = 0;
 int TextBox::NEXT_GROUP_ID = 0;
 
 
-TextBox::TextBox(UIManager& ui_manager, sf::View& scrollView ,std::string_view speaker, std::string_view text,  sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID):
+TextBox::TextBox(UIManager& ui_manager, sf::View& scrollView ,std::string_view speaker, std::string_view text,  sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID, int nextID):
 m_text(text),
 m_speaker(speaker),
 IUIElement(position),
 m_width(width),
 m_type(type),
 m_groupID(groupID),
+m_nextID(nextID),
 m_ID(ID),
 ui_manager(ui_manager),
 m_scrollView(scrollView),
@@ -94,7 +95,7 @@ void TextBox::handleEvent(const sf::Event &event) {
                     m_text,
                     m_speaker,
                         m_ID,
-                        m_groupID,
+                        m_nextID,
                         m_type,
                     });
                 }
