@@ -50,3 +50,8 @@ void SceneManager::handleEvent(const std::optional<sf::Event>& event) {
     }
 
 }
+
+void SceneManager::update() {
+    m_activeScene->update();
+}
+

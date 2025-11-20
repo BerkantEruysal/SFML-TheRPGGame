@@ -24,7 +24,7 @@ Image::Image(std::string_view path, UIManager& ui_manager, sf::Vector2f position
 
         float scaleX = static_cast<float>(windowSize.x) / static_cast<float>(textureSize.x);
         float scaleY = static_cast<float>(windowSize.y) / static_cast<float>(textureSize.y);
-        std::cout << scaleX << " " << scaleY << std::endl;
+
         m_backgroundSprite.setScale(sf::Vector2f(scaleX, scaleY));
     }else {
         m_backgroundSprite.setScale(scaleFactor);

@@ -18,7 +18,7 @@ public:
     ScrollableTextContainer(UIManager& ui_manager, sf::Vector2f position, float width, float height);
 
     //IUIElement* addTextBox(std::unique_ptr<TextBox> element);
-    IUIElement* createTextBox(std::string_view speaker, std::string_view text,  Model::TextBoxType type, std::function<void(Model::Dialog)> onClick,  int ID,  int groupID, int nextID);
+    IUIElement* createTextBox(const Model::Dialog& dialog, int groupID,  std::function<void(Model::Dialog)> onClick);
 
     bool removeElementFromVector(TextBox*);
     bool removeElementFromVector(size_t index);
@@ -27,7 +27,10 @@ public:
     void setPosition(sf::Vector2f position) override;
     sf::FloatRect getGLobalBounds() override;
     void handleEvent(const sf::Event &event) override;
-    void removeOptionGroup(int groupID);
+    void removeOptionGroup();
+    void scheduleOptionGroupRemoval(int groupID);
+    bool isTherePendingRemoval {false};
+    void update() override;
 
 private:
     static constexpr float BOX_SPACING {10.0f};

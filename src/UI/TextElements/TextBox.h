@@ -30,6 +30,7 @@ public:
     int m_groupID;
     int m_ID;
     int m_nextID;
+    bool m_isRemovalScheduled {false};
 
     static int NEXT_ID;
     static int NEXT_GROUP_ID;

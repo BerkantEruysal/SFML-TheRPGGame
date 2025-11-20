@@ -14,7 +14,7 @@
 class IScene {
 public:
     const std::string m_name;
-
+    virtual void update(){};
     virtual ~IScene() = default;
     virtual void onEnter() = 0;
     virtual void onExit() = 0;

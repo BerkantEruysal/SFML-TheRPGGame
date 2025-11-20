@@ -23,7 +23,7 @@ public:
     void render();
     void handleEvent(const std::optional<sf::Event>& event);
     IUIElement* addUIElementToVector(std::unique_ptr<IUIElement> element);
-
+    void update();
 
 
 

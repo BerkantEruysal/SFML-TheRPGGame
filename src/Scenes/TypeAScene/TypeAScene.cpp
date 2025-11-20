@@ -95,13 +95,9 @@ void TypeAScene::nextGroup(int id) {
         m_currentGroupID = id;
         for (auto& dialog : m_dialogGroups[index].dialogs) {
          scrollableTextContainerRef->createTextBox(
-            dialog.speaker,
-            dialog.text,
-            dialog.type,
-            [this](const Model::Dialog& option) {handleOptionSelection(option, m_currentGroupID);},
-            dialog.id,
-            m_dialogGroups[index].id,
-        dialog.nextID
+         dialog,
+         m_dialogGroups[index].id,
+         [this](const Model::Dialog& option) {handleOptionSelection(option, m_currentGroupID);}
          );
         }
 
@@ -109,8 +105,9 @@ void TypeAScene::nextGroup(int id) {
 
 }
 
-void TypeAScene::handleOptionSelection(Model::Dialog option, int groupID) {
+void TypeAScene::handleOptionSelection(const Model::Dialog& option, int groupID) {
 
+    // Arrangement matters in here
+    scrollableTextContainerRef->scheduleOptionGroupRemoval(groupID);
     nextGroup(option.nextID);
-    scrollableTextContainerRef->removeOptionGroup(groupID);
 }

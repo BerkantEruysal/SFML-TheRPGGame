@@ -192,7 +192,7 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
 
 void TextBox::calculateElementPositions() {
     static constexpr float shiftValue = 5.0f;
-    std::cout << m_position.x << " " << m_position.y << std::endl;
+
     m_speakerObject.setPosition(sf::Vector2f(m_position.x + BOX_SPACING, m_position.y + BOX_SPACING));
     const float speakerWidth = m_speakerObject.getLocalBounds().size.x;
     const float speakerHeight = m_speakerObject.getLocalBounds().size.y;

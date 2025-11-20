@@ -76,14 +76,16 @@ void ScrollableTextContainer::setPosition(const sf::Vector2f position) {
     // Empty because we won't need it for now.
 }
 
-IUIElement *ScrollableTextContainer::createTextBox(std::string_view speaker, std::string_view text , Model::TextBoxType type , std::function<void(Model::Dialog)> onClick, int ID,  int groupID, int nextID) {
+IUIElement *ScrollableTextContainer::createTextBox(const Model::Dialog& dialog, int groupID,  std::function<void(Model::Dialog)> onClick) {
     //float bottomPoint {m_position.y + m_height};
     float totalSize{0};
     for (auto& element : m_TextElems) {
-        totalSize += element->getHeight() + BOX_SPACING ;
+        if (element->m_isRemovalScheduled == false) {
+            totalSize += element->getHeight() + BOX_SPACING ;
+        }
     }
     sf::Vector2f calculatedPosition { 0, totalSize};
-    m_TextElems.push_back(std::make_unique<TextBox>(ui_manager, m_scrollView ,speaker , text,  calculatedPosition, m_width, type, ID , groupID, nextID));
+    m_TextElems.push_back(std::make_unique<TextBox>(ui_manager, m_scrollView , dialog.speaker , dialog.text,  calculatedPosition, m_width, dialog.type, dialog.id , groupID, dialog.nextID));
     m_TextElems.back()->onClick = std::move(onClick);
 
     if (totalSize > m_height) {
@@ -121,25 +123,60 @@ void ScrollableTextContainer::handleEvent(const sf::Event &event) {
         }
     }
 
-    for (auto& element : m_TextElems) {
-        element->handleEvent(event);
+
+
+    for (std::vector<IUIElement>::size_type i = 0; i < m_TextElems.size(); i++) {
+        m_TextElems[i]->handleEvent(event);
     }
 }
 
-void ScrollableTextContainer::removeOptionGroup(int groupID) {
+void ScrollableTextContainer::removeOptionGroup() {
+
     m_TextElems.erase(
         std::remove_if(
             m_TextElems.begin(),
             m_TextElems.end(),
-            [groupID](const std::unique_ptr<TextBox>& ptr) {
-                return ptr->m_groupID == groupID; // groupID eşleşiyorsa sil
+            [ ](const std::unique_ptr<TextBox>& ptr) {
+                return ptr->m_isRemovalScheduled == true; // groupID eşleşiyorsa sil
             }
         ),
         m_TextElems.end()
     );
+    isTherePendingRemoval = false;
+
 }
 
-void ScrollableTextContainer::adjustScrollToBottom () {
-    //Scroll all the way to the bottom
-    m_scrollView.move(sf::Vector2f(0, m_height));
+void ScrollableTextContainer::scheduleOptionGroupRemoval(int groupID) {
+    for (auto& element : m_TextElems) {
+        if (element->m_groupID == groupID) {
+            element->m_isRemovalScheduled = true;
+            isTherePendingRemoval = true;
+        }
+    }
+}
+
+void ScrollableTextContainer::adjustScrollToBottom() {
+    // Toplam içerik yüksekliğini hesapla
+    float totalContentHeight = 0;
+    for (auto& element : m_TextElems) {
+        if (!element->m_isRemovalScheduled) {
+            totalContentHeight += element->getHeight() + BOX_SPACING;
+        }
+    }
+
+    // View'in merkezini ayarla
+    // En alttaki içeriği göstermek için: center.y = totalContentHeight - (m_height / 2)
+    float newCenterY = totalContentHeight - (m_height / 2.0f);
+
+    // Minimum limit: içerik küçükse yukarıda kalsın
+    float minY = m_height / 2.0f;
+    newCenterY = std::max(newCenterY, minY);
+
+    m_scrollView.setCenter(sf::Vector2f(m_width / 2.0f, newCenterY));
+}
+
+void ScrollableTextContainer::update() {
+    if (isTherePendingRemoval) {
+        removeOptionGroup();
+    }
 }

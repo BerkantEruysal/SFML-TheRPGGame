@@ -15,6 +15,7 @@ public:
     virtual void setPosition (sf::Vector2f position) = 0;
     virtual sf::FloatRect getGLobalBounds() = 0;
     virtual void cleanup() {}
+    virtual void update(){};
 protected:
     sf::Vector2f m_position;
 private:

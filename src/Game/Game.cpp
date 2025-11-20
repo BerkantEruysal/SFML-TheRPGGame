@@ -53,7 +53,8 @@ void Game::processEvents() {
 }
 
 void Game::update() {
-
+    m_UIManager.update();
+    m_sceneManager.update();
 }
 
 void Game::render() {

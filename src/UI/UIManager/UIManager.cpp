@@ -46,6 +46,12 @@ IUIElement* UIManager::addUIElementToVector(std::unique_ptr<IUIElement> element)
     return ptr;
 }
 
+void UIManager::update() {
+    for (auto& element : m_UIElements) {
+        element->update();
+    }
+}
+
 
 
 
