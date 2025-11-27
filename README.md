@@ -1,101 +1,88 @@
-# CMake SFML Project Template
+# SFML Visual Novel Engine
 
-This repository template should allow for a fast and hassle-free kick start of your next SFML project using CMake.
-Thanks to [GitHub's nature of templates](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template), you can fork this repository without inheriting its Git history.
+This project is a text-based **Role Playing Game (RPG)** and **Visual Novel** engine developed using **C++** and **SFML** (Simple and Fast Multimedia Library).
 
-The template starts out very basic, but might receive additional features over time:
+It offers players an interactive story experience where they can shape the narrative through their choices, accompanied by dynamic visuals and an atmospheric interface.
 
-- Basic CMake script to build your project and link SFML on any operating system
-- Basic [GitHub Actions](https://github.com/features/actions) script for all major platforms
+## 📖 About the Project
 
-## How to Use
+This game engine combines classic text-based adventures with modern visual presentation. It provides a deep narrative with backgrounds that change according to the story flow, character dialogues, and user choices.
 
-1. Install [Git](https://git-scm.com/downloads) and [CMake](https://cmake.org/download/). Use your system's package manager if available.
-2. Follow [GitHub's instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for how to use their project template feature to create your own project. If you don't want to use GitHub, see the section below.
-3. Clone your new GitHub repo and open the repo in your text editor of choice.
-4. Open [CMakeLists.txt](CMakeLists.txt). Rename the project and the target name of the executable to whatever name you want. Make sure to change all occurrences.
-5. If you want to add or remove any .cpp files, change the source files listed in the `add_executable` call in CMakeLists.txt to match the source files your project requires. If you plan on keeping the default main.cpp file then no changes are required.
-6. If your code uses the Audio or Network modules then add `SFML::Audio` or `SFML::Network` to the `target_link_libraries` call alongside the existing `SFML::Graphics` library that is being linked.
-7. If you use Linux, install SFML's dependencies using your system package manager. On Ubuntu and other Debian-based distributions you can use the following commands:
-   ```
-   sudo apt update
-   sudo apt install \
-       libxrandr-dev \
-       libxcursor-dev \
-       libxi-dev \
-       libudev-dev \
-       libfreetype-dev \
-       libflac-dev \
-       libvorbis-dev \
-       libgl1-mesa-dev \
-       libegl1-mesa-dev \
-       libfreetype-dev
-   ```
-8. Configure and build your project. Most popular IDEs support CMake projects with very little effort on your part.
+## ✨ Features
 
-   - [VS Code](https://code.visualstudio.com) via the [CMake extension](https://code.visualstudio.com/docs/cpp/cmake-linux)
-   - [Visual Studio](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170)
-   - [CLion](https://www.jetbrains.com/clion/features/cmake-support.html)
-   - [Qt Creator](https://doc.qt.io/qtcreator/creator-project-cmake.html)
+*   **Dynamic Storytelling:** A branching dialogue tree responsive to player choices (User Choice).
+*   **Advanced Scene Management:** Modular `SceneManager` structure ensuring smooth transitions between in-game scenes, menus, and different states.
+*   **Layered Visual System:** `UIManager` that processes backgrounds, frames, paper textures, and scene visuals in layers.
+*   **Interactive Interface:**
+    *   Scrollable text boxes (`ScrollableTextContainer`).
+    *   Clickable selection buttons.
+    *   Keyboard and mouse interaction.
+*   **Resource Management:** Singleton design pattern for performant management of game assets like fonts and images.
 
-   Using CMake from the command line is straightforward as well.
-   Be sure to run these commands in the root directory of the project you just created.
+## 🛠 Technical Details
 
-   ```
-   cmake -B build
-   cmake --build build
-   ```
+This project has been prepared observing modern game development principles and clean code standards.
 
-9. Enjoy!
+*   **Programming Language:** C++17
+*   **Graphics Engine:** SFML 3.0.2
+*   **Build System:** CMake (Cross-platform support)
+*   **Architecture:**
+    *   **State Pattern:** For scene transitions and management.
+    *   **Singleton Pattern:** For resource management (`ResourceManager`).
+    *   **Component-based UI:** Flexible and reusable interface elements.
 
-## Upgrading SFML
+## 🚀 Installation and Compilation
 
-SFML is found via CMake's [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html) module.
-FetchContent automatically downloads SFML from GitHub and builds it alongside your own code.
-Beyond the convenience of not having to install SFML yourself, this ensures ABI compatibility and simplifies things like specifying static versus shared libraries.
+You can follow the steps below to compile and run the project on your own computer.
 
-Modifying what version of SFML you want is as easy as changing the `GIT_TAG` argument.
-Currently it uses SFML 3 via the `3.0.0` tag.
+### Requirements
 
-## But I want to...
+*   **C++ Compiler:** C++17 supported (GCC, Clang, MSVC).
+*   **CMake:** Version 3.28 or higher.
+*   **Git:** To clone the project.
+*   **For Linux:** SFML dependencies (can be installed with the command below).
 
-Modify CMake options by adding them as configuration parameters (with a `-D` flag) or by modifying the contents of CMakeCache.txt and rebuilding.
+### Step-by-Step Installation
 
-### Not use GitHub
+1.  **Clone the Project:**
+    ```bash
+    git clone https://github.com/BerkantEruysal/sfml-repo.git
+    cd sfml-repo
+    ```
 
-You can use this project without a GitHub account by [downloading the contents](https://github.com/SFML/cmake-sfml-project/archive/refs/heads/master.zip) of the repository as a ZIP archive and unpacking it locally.
-This approach also avoids using Git entirely if you would prefer to not do that.
+2.  **Dependencies for Linux Users:**
+    On Ubuntu/Debian based systems:
+    ```bash
+    sudo apt update
+    sudo apt install libxrandr-dev libxcursor-dev libxi-dev libudev-dev libfreetype-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev
+    ```
 
-### Change Compilers
+3.  **Compile the Project:**
+    ```bash
+    cmake -B build
+    cmake --build build
+    ```
 
-See the variety of [`CMAKE_<LANG>_COMPILER`](https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_COMPILER.html) options.
-In particular you'll want to modify `CMAKE_CXX_COMPILER` to point to the C++ compiler you wish to use.
+4.  **Launch the Game:**
+    *   **Linux/macOS:**
+        ```bash
+        ./build/bin/main
+        ```
+    *   **Windows:**
+        Run the file at `build/bin/Debug/main.exe`.
 
-### Change Compiler Optimizations
+## 🎮 How to Play?
 
-CMake abstracts away specific optimizer flags through the [`CMAKE_BUILD_TYPE`](https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html) option.
-By default this project recommends `Release` builds which enable optimizations.
-Other build types include `Debug` builds which enable debug symbols but disable optimizations.
-If you're using a multi-configuration generator (as is often the case on Windows), you can modify the [`CMAKE_CONFIGURATION_TYPES`](https://cmake.org/cmake/help/latest/variable/CMAKE_CONFIGURATION_TYPES.html#variable:CMAKE_CONFIGURATION_TYPES) option.
+*   **Progression:** Use the **Space** key to skip dialogues and advance the story.
+*   **Making Choices:** When options appear, click on the option you want with your mouse to direct the story.
 
-### Change Generators
+## 📂 File Structure
 
-While CMake will attempt to pick a suitable default generator, some systems offer a number of generators to choose from.
-Ubuntu, for example, offers Makefiles and Ninja as two potential options.
-For a list of generators, click [here](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html).
-To modify the generator you're using you must reconfigure your project providing a `-G` flag with a value corresponding to the generator you want.
-You can't simply modify an entry in the CMakeCache.txt file unlike the above options.
-Then you may rebuild your project with this new generator.
+*   `src/Game`: Main game loop and initialization processes.
+*   `src/Scenes`: Logic for game scenes (Menu, In-Game).
+*   `src/UI`: Interface components like buttons, images, and text boxes.
+*   `src/Resources`: The section where font and image files are loaded and managed.
+*   `src/Models`: Dialogue data and game logic structures.
 
-## More Reading
-
-Here are some useful resources if you want to learn more about CMake:
-
-- [Official CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/)
-- [How to Use CMake Without the Agonizing Pain - Part 1](https://alexreinking.com/blog/how-to-use-cmake-without-the-agonizing-pain-part-1.html)
-- [How to Use CMake Without the Agonizing Pain - Part 2](https://alexreinking.com/blog/how-to-use-cmake-without-the-agonizing-pain-part-2.html)
-- [Better CMake YouTube series by Jefferon Amstutz](https://www.youtube.com/playlist?list=PL8i3OhJb4FNV10aIZ8oF0AA46HgA2ed8g)
-
-## License
-
-The source code is dual licensed under Public Domain and MIT -- choose whichever you prefer.
+---
+*This project was developed to demonstrate C++ and SFML capabilities.*
