@@ -9,17 +9,19 @@
 
 
 const float TextBox::LINE_SPACING = 12.0f;
-const sf::Color TextBox::TEXT_COLOR = sf::Color::Black;
-const sf::Color TextBox::SPEAKER_COLOR = sf::Color::Red;
+const sf::Color TextBox::TEXT_COLOR = sf::Color (43,29,20);
+const sf::Color TextBox::SPEAKER_COLOR = sf::Color (128,20,20);
+const sf::Color TextBox::OPTION_COLOR = sf::Color (128,20,20);
 const float TextBox::TEXT_X_AXIS_PADDING = 50.0f;
-const sf::Color TextBox::BG_HOVER_COLOR = sf::Color(100, 255, 163, 100);
-const sf::Color TextBox::BG_COLOR =  sf::Color(0, 0, 0, 50);
-const float TextBox::BOX_SPACING = 10.0f;
+const sf::Color TextBox::BG_HOVER_COLOR = sf::Color(40, 30, 20, 0);
+const sf::Color TextBox::BG_COLOR =  sf::Color(0, 0, 0, 0);
+const sf::Color TextBox::HOVER_TEXT_COLOR = sf::Color (128,20,20);
+const float TextBox::BOX_SPACING = 0.0f;
 int TextBox::NEXT_ID = 0;
 int TextBox::NEXT_GROUP_ID = 0;
 
 
-TextBox::TextBox(UIManager& ui_manager, sf::View& scrollView ,std::string_view speaker, std::string_view text,  sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID, int nextID):
+TextBox::TextBox(UIManager& ui_manager, sf::View& scrollView ,std::string_view speaker, std::string_view text,  sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID, int nextID, int optionNumber):
 m_text(text),
 m_speaker(speaker),
 IUIElement(position),
@@ -30,12 +32,25 @@ m_nextID(nextID),
 m_ID(ID),
 ui_manager(ui_manager),
 m_scrollView(scrollView),
-m_speakerObject(ResourceManager::getInstance().getFont("arial"), sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()), TextBox::SPEAKER_CHARACTER_SIZE)
+m_optionNumber(optionNumber),
+
+m_speakerObject(ResourceManager::getInstance().getFont("crimsonBoldItalic"), sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()), TextBox::SPEAKER_CHARACTER_SIZE)
 
 {
      m_speakerObject.setCharacterSize(TextBox::SPEAKER_CHARACTER_SIZE);
-     m_speakerObject.setFillColor(TextBox::SPEAKER_COLOR);
-     m_speakerObject.setString(sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()));
+
+    if (m_type == Model::TextBoxType::UserChoice) {
+        m_speakerObject.setFillColor(TextBox::OPTION_COLOR);
+        m_speakerObject.setString(">");
+        m_speakerObject.setCharacterSize(TextBox::OPTION_CHARACTER_SIZE);
+    }else if (m_type == Model::TextBoxType::Narator) {
+        m_speakerObject.setFillColor(TextBox::SPEAKER_COLOR);
+        m_speakerObject.setString(sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()));
+    }else {
+        m_speakerObject.setFillColor(TextBox::SPEAKER_COLOR);
+        m_speakerObject.setString(sf::String::fromUtf8(m_speaker.begin(), m_speaker.end()));
+    }
+
 
      wrapText(std::string{speaker}, std::string{text} , m_width - BOX_SPACING * 2);
 
@@ -110,11 +125,11 @@ void TextBox::handleEvent(const sf::Event &event) {
 void TextBox::wrapText(const std::string& speaker, const std::string& text, float maxWidth) {
     m_textLines.clear();
 
-    const sf::Font& font = ResourceManager::getInstance().getFont("arial");
+    const sf::Font& font = ResourceManager::getInstance().getFont("crimson");
 
     // Speaker'ı ayarla (sadece ilk satır için)
 
-    m_speakerObject.setString(speaker.empty() ? sf::String() : sf::String::fromUtf8(speaker.begin(), speaker.end()) + sf::String(" "));
+    m_speakerObject.setString(speaker.empty() ? sf::String() : m_speakerObject.getString() + sf::String(" "));
 
     const float speakerWidth = speaker.empty() ? 0.0f : m_speakerObject.getLocalBounds().size.x;
 
@@ -191,7 +206,12 @@ void TextBox::wrapText(const std::string& speaker, const std::string& text, floa
 }
 
 void TextBox::calculateElementPositions() {
-    static constexpr float shiftValue = 5.0f;
+    float shiftValue;
+    if (m_type == Model::TextBoxType::UserChoice) {
+        shiftValue = 0;
+    }else {
+        shiftValue = TextBox::SHIFT_VALUE;
+    }
 
     m_speakerObject.setPosition(sf::Vector2f(m_position.x + BOX_SPACING, m_position.y + BOX_SPACING));
     const float speakerWidth = m_speakerObject.getLocalBounds().size.x;
@@ -215,13 +235,17 @@ float TextBox::getHeight() const {
 
 void TextBox::onHoverStart() {
     m_textBackground.setFillColor(BG_HOVER_COLOR);
-
+    for (auto& line : m_textLines) {
+        line.setFillColor(TextBox::HOVER_TEXT_COLOR);
+    }
 
 }
 
 void TextBox::onHoverEnd() {
     m_textBackground.setFillColor(BG_COLOR);
-
+    for (auto& line : m_textLines) {
+        line.setFillColor(TextBox::TEXT_COLOR);
+    }
 
 }
 

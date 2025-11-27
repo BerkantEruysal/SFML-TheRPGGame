@@ -16,7 +16,14 @@ Game::Game():
     auto& rm = ResourceManager::getInstance();
     
 
-    if (!rm.loadFont("arial", "assets/fonts/arial.ttf")) {
+    if (!rm.loadFont("arial", "assets/fonts/arial.ttf")
+        || !rm.loadFont("crimsonBold", "assets/fonts/CrimsonText-Bold.ttf")
+        || !rm.loadFont("crimsonBoldItalic", "assets/fonts/CrimsonText-BoldItalic.ttf")
+        || !rm.loadFont("crimsonItalic", "assets/fonts/CrimsonText-Italic.ttf")
+        || !rm.loadFont("crimson", "assets/fonts/CrimsonText-Regular.ttf")
+        || !rm.loadFont("crimsonSemiBold", "assets/fonts/CrimsonText-SemiBold.ttf")
+        || !rm.loadFont("crimsonSemiBoldItalic", "assets/fonts/CrimsonText-SemiBoldItalic.ttf"))
+    {
         std::cerr << "ERROR: Failed to load arial font" << std::endl;
         throw std::runtime_error("Failed to load arial font");
     }

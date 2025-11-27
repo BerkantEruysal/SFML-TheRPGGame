@@ -18,7 +18,7 @@ public:
     ScrollableTextContainer(UIManager& ui_manager, sf::Vector2f position, float width, float height);
 
     //IUIElement* addTextBox(std::unique_ptr<TextBox> element);
-    IUIElement* createTextBox(const Model::Dialog& dialog, int groupID,  std::function<void(Model::Dialog)> onClick);
+    IUIElement* createTextBox(const Model::Dialog& dialog, int groupID, int optionNumber,  std::function<void(Model::Dialog)> onClick);
 
     bool removeElementFromVector(TextBox*);
     bool removeElementFromVector(size_t index);

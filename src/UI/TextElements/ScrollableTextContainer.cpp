@@ -76,7 +76,7 @@ void ScrollableTextContainer::setPosition(const sf::Vector2f position) {
     // Empty because we won't need it for now.
 }
 
-IUIElement *ScrollableTextContainer::createTextBox(const Model::Dialog& dialog, int groupID,  std::function<void(Model::Dialog)> onClick) {
+IUIElement *ScrollableTextContainer::createTextBox(const Model::Dialog& dialog, int groupID, int optionNumber,  std::function<void(Model::Dialog)> onClick) {
     //float bottomPoint {m_position.y + m_height};
     float totalSize{0};
     for (auto& element : m_TextElems) {
@@ -85,7 +85,7 @@ IUIElement *ScrollableTextContainer::createTextBox(const Model::Dialog& dialog, 
         }
     }
     sf::Vector2f calculatedPosition { 0, totalSize};
-    m_TextElems.push_back(std::make_unique<TextBox>(ui_manager, m_scrollView , dialog.speaker , dialog.text,  calculatedPosition, m_width, dialog.type, dialog.id , groupID, dialog.nextID));
+    m_TextElems.push_back(std::make_unique<TextBox>(ui_manager, m_scrollView , dialog.speaker , dialog.text,  calculatedPosition, m_width, dialog.type, dialog.id , groupID, dialog.nextID, optionNumber));
     m_TextElems.back()->onClick = std::move(onClick);
 
     if (totalSize > m_height) {

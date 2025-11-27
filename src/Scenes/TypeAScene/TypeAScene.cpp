@@ -22,7 +22,7 @@ void TypeAScene::onEnter() {
     const float framePositionY = ui_manager.getWindow().getSize().y / 2 + 5;
     auto frame = std::make_unique<Image>(std::string_view("assets/images/frame.png"), ui_manager, sf::Vector2f(framePositionX,framePositionY), false, sf::Vector2f(1.4,1.4), true);
 
-    auto paper = std::make_unique<Image>(std::string_view("assets/images/paper.jpeg"), ui_manager, sf::Vector2f(0,0), false, sf::Vector2f(1.35,1.35), false);
+    auto paper = std::make_unique<Image>(std::string_view("assets/images/paper.jpg"), ui_manager, sf::Vector2f(0,0), false, sf::Vector2f(1.35,1.35), false);
     paper->m_backgroundSprite.rotate(sf::degrees(90));
 
     auto frameImage = std::make_unique<Image>(std::string_view("assets/images/menuBackground1.jpeg"), ui_manager, sf::Vector2f(115,120), false, sf::Vector2f(1,1), false);
@@ -93,12 +93,16 @@ void TypeAScene::nextGroup(int id) {
 
     if (index < m_dialogGroups.size()) {
         m_currentGroupID = id;
+        int optionCounter {1};
         for (auto& dialog : m_dialogGroups[index].dialogs) {
          scrollableTextContainerRef->createTextBox(
          dialog,
          m_dialogGroups[index].id,
+         optionCounter,
          [this](const Model::Dialog& option) {handleOptionSelection(option, m_currentGroupID);}
          );
+            optionCounter++;
+            
         }
 
     }

@@ -17,7 +17,7 @@ public:
 
     void setText(std::string_view text);
 
-    TextBox(UIManager &ui_manager, sf::View& scrollView ,  std::string_view speaker,std::string_view text, sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID, int nextID);
+    TextBox(UIManager &ui_manager, sf::View& scrollView ,  std::string_view speaker,std::string_view text, sf::Vector2f position, float width, Model::TextBoxType type, int ID, int groupID, int nextID, int optionNumber);
     void draw(sf::RenderWindow &window) override;
     void handleEvent(const sf::Event &event) override;
     void setPosition(sf::Vector2f position) override;
@@ -49,6 +49,10 @@ private:
     static const sf::Color BG_HOVER_COLOR;
     static const sf::Color BG_COLOR;
     static const float BOX_SPACING;
+    static const sf::Color OPTION_COLOR;
+    static constexpr unsigned int OPTION_CHARACTER_SIZE {20};
+    static constexpr float SHIFT_VALUE {5.0f};
+    static const sf::Color HOVER_TEXT_COLOR;
 
     bool m_isHovered {false};
     Model::TextBoxType m_type;
@@ -59,6 +63,7 @@ private:
     sf::RectangleShape m_textBackground;
     UIManager& ui_manager;
     sf::View& m_scrollView;
+    int m_optionNumber;
 
 
 
